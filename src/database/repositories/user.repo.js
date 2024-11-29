@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const { User } = require("../models");
+const { _attributes } = require("../connection");
 
 class UserRepository {
   constructor() {}
@@ -116,5 +117,25 @@ class UserRepository {
       throw error;
     }
   }
+
+  async GetAllUsersByBookId(bookId) {
+    try {
+      // this query only returns users that borrow and returned book of this bookId
+      return await User.findAll({
+        where: Sequelize.literal(`
+    EXISTS (
+      SELECT 1
+      FROM jsonb_array_elements(books->'past') elem
+      WHERE elem->>'bookId' = '${bookId}'
+    )
+  `),
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  
 }
 module.exports = UserRepository;

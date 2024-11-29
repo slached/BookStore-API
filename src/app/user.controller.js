@@ -1,5 +1,5 @@
 const { UserService } = require("../service");
-const { CreateUserValidator, ReturnBookValidator } = require("./middlewares");
+const { CreateUserValidator, ReturnBookValidator, ParamValidator } = require("./middlewares");
 
 const User = (app) => {
   const userService = new UserService();
@@ -30,7 +30,7 @@ const User = (app) => {
     }
   });
 
-  app.post("/users/:userId/borrow/:bookId", async (req, res, next) => {
+  app.post("/users/:userId/borrow/:bookId", ParamValidator, async (req, res, next) => {
     try {
       const { userId, bookId } = req.params;
       return res.status(201).json(await userService.borrowBook(userId, bookId));
@@ -39,7 +39,7 @@ const User = (app) => {
     }
   });
 
-  app.post("/users/:userId/return/:bookId", ReturnBookValidator, async (req, res, next) => {
+  app.post("/users/:userId/return/:bookId", ReturnBookValidator, ParamValidator, async (req, res, next) => {
     try {
       const { userId, bookId } = req.params;
       const { score } = req.body;

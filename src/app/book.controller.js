@@ -12,6 +12,15 @@ const Book = (app) => {
     }
   });
 
+  app.get("/books/:bookId", async (req, res, next) => {
+    try {
+      const { bookId } = req.params;
+      res.status(200).json(await bookService.getBookById(bookId));
+    } catch (err) {
+      next(err);
+    }
+  });
+
   app.post("/books", CreateBookValidator, async (req, res, next) => {
     try {
       const book = req.body;

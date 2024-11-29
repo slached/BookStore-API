@@ -18,4 +18,31 @@ const returnBookSchema = Joi.object({
   }),
 });
 
-module.exports = { createUserSchema, createBookSchema, returnBookSchema };
+const paramSchema = Joi.object({
+  userId: Joi.string()
+    .pattern(/^\d+$/)
+    .custom((value, helpers) => {
+      if (isNaN(Number(value))) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    })
+    .messages({
+      "string.pattern.base": "Value must be a numeric string.",
+      "any.invalid": "Value must be a string containing a number.",
+    }),
+  bookId: Joi.string()
+    .pattern(/^\d+$/)
+    .custom((value, helpers) => {
+      if (isNaN(Number(value))) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    })
+    .messages({
+      "string.pattern.base": "Value must be a numeric string.",
+      "any.invalid": "Value must be a string containing a number.",
+    }),
+});
+
+module.exports = { createUserSchema, createBookSchema, returnBookSchema, paramSchema };
