@@ -20,6 +20,15 @@ const User = (app) => {
       next(err);
     }
   });
+
+  app.post("/users/:userId/borrow/:bookId", async (req, res, next) => {
+    try {
+      const { userId, bookId } = req.params;
+      return await userService.borrowBook(userId, bookId);
+    } catch (err) {
+      next(err);
+    }
+  });
 };
 
 module.exports = User;

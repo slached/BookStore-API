@@ -7,9 +7,9 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const { rateLimit } = require("express-rate-limit");
 const { PORT } = require("./config");
-const { User } = require("./app");
+const { User, Book } = require("./app");
 const { DB } = require("./database");
-
+const ErrorHandler = require("./utils/error/error.handler");
 const StartServer = async () => {
   // Connect DB
 
@@ -47,6 +47,10 @@ const StartServer = async () => {
 
   // Controllers
   User(app);
+  Book(app);
+
+  // Error Handler
+  app.use(ErrorHandler);
 
   app
     .listen(PORT)
