@@ -1,5 +1,5 @@
 const { UserService } = require("../service");
-const { UserValidator } = require("./middlewares");
+const { CreateUserValidator, ReturnBookValidator } = require("./middlewares");
 
 const User = (app) => {
   const userService = new UserService();
@@ -12,7 +12,16 @@ const User = (app) => {
     }
   });
 
-  app.post("/users", UserValidator, async (req, res, next) => {
+  app.get("/users/:userId", async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      res.status(200).json(await userService.getUserById(userId));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post("/users", CreateUserValidator, async (req, res, next) => {
     try {
       const user = req.body;
       res.status(201).json(await userService.createUsers(user));
@@ -24,7 +33,17 @@ const User = (app) => {
   app.post("/users/:userId/borrow/:bookId", async (req, res, next) => {
     try {
       const { userId, bookId } = req.params;
-      return await userService.borrowBook(userId, bookId);
+      return res.status(201).json(await userService.borrowBook(userId, bookId));
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  app.post("/users/:userId/return/:bookId", ReturnBookValidator, async (req, res, next) => {
+    try {
+      const { userId, bookId } = req.params;
+      const { score } = req.body;
+      return res.status(201).json(await userService.returnBook(userId, bookId, score));
     } catch (err) {
       next(err);
     }

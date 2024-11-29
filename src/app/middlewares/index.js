@@ -1,4 +1,5 @@
 module.exports = {
-  UserValidator: require("./joi.validator.mw").userValidator,
-  BookValidator: require("./joi.validator.mw").bookValidator,
+  CreateUserValidator: require("./joi.validator.mw").createUserValidator,
+  CreateBookValidator: require("./joi.validator.mw").createBookValidator,
+  ReturnBookValidator: require("./joi.validator.mw").returnBookValidator,
 };

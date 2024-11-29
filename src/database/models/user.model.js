@@ -11,10 +11,12 @@ const User = DB.define(
     },
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
     },
     books: {
       type: DataTypes.JSONB,
+      defaultValue: { past: [], present: [] },
       allowNull: true,
     },
   },

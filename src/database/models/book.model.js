@@ -11,6 +11,7 @@ const Book = DB.define(
     },
     name: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false,
     },
     score: {

@@ -12,4 +12,10 @@ const createBookSchema = Joi.object({
   }),
 });
 
-module.exports = { createUserSchema, createBookSchema };
+const returnBookSchema = Joi.object({
+  score: Joi.number().required().messages({
+    "number.empty": "Score is required",
+  }),
+});
+
+module.exports = { createUserSchema, createBookSchema, returnBookSchema };

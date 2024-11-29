@@ -1,5 +1,5 @@
 const { BookService } = require("../service");
-const { BookValidator } = require("./middlewares");
+const { CreateBookValidator } = require("./middlewares");
 
 const Book = (app) => {
   const bookService = new BookService();
@@ -12,7 +12,7 @@ const Book = (app) => {
     }
   });
 
-  app.post("/books", BookValidator, async (req, res, next) => {
+  app.post("/books", CreateBookValidator, async (req, res, next) => {
     try {
       const book = req.body;
       res.status(200).json(await bookService.createBook(book));
