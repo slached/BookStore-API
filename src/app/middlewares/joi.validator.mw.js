@@ -1,4 +1,10 @@
-const { createUserSchema, createBookSchema, returnBookSchema, paramSchema } = require("../../validation/validator.schemas");
+const {
+  createUserSchema,
+  createBookSchema,
+  returnBookSchema,
+  paramSchema,
+  paramSchema_2,
+} = require("../../validation/validator.schemas");
 
 const createUserValidator = (req, res, next) => {
   const { error, value } = createUserSchema.validate(req.body);
@@ -42,9 +48,21 @@ const paramValidator = (req, res, next) => {
   next();
 };
 
+const paramValidator_2 = (req, res, next) => {
+  const { error, value } = paramSchema_2.validate(req.params);
+
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
+
+  req.params = value;
+  next();
+};
+
 module.exports = {
   createUserValidator,
   createBookValidator,
   returnBookValidator,
   paramValidator,
+  paramValidator_2,
 };

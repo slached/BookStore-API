@@ -13,8 +13,10 @@ const createBookSchema = Joi.object({
 });
 
 const returnBookSchema = Joi.object({
-  score: Joi.number().required().messages({
+  score: Joi.number().min(0).max(10).required().messages({
     "number.empty": "Score is required",
+    "number.min": "Score must be greater than 0!",
+    "number.max": "Score must be lesser than 10!",
   }),
 });
 
@@ -45,4 +47,19 @@ const paramSchema = Joi.object({
     }),
 });
 
-module.exports = { createUserSchema, createBookSchema, returnBookSchema, paramSchema };
+const paramSchema_2 = Joi.object({
+  bookId: Joi.string()
+    .pattern(/^\d+$/)
+    .custom((value, helpers) => {
+      if (isNaN(Number(value))) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    })
+    .messages({
+      "string.pattern.base": "Value must be a numeric string.",
+      "any.invalid": "Value must be a string containing a number.",
+    }),
+});
+
+module.exports = { createUserSchema, createBookSchema, returnBookSchema, paramSchema, paramSchema_2 };

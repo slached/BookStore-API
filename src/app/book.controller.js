@@ -1,5 +1,5 @@
 const { BookService } = require("../service");
-const { CreateBookValidator } = require("./middlewares");
+const { CreateBookValidator, ParamValidator_2 } = require("./middlewares");
 
 const Book = (app) => {
   const bookService = new BookService();
@@ -12,7 +12,7 @@ const Book = (app) => {
     }
   });
 
-  app.get("/books/:bookId", async (req, res, next) => {
+  app.get("/books/:bookId", ParamValidator_2, async (req, res, next) => {
     try {
       const { bookId } = req.params;
       res.status(200).json(await bookService.getBookById(bookId));
