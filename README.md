@@ -64,70 +64,7 @@ Follow these steps to get the BookStore API up and running locally.
 
     The server will now be running on `http://localhost:5000`.
 
-### API Endpoints
 
-| Method | Endpoint               | Description                      |
-|--------|------------------------|----------------------------------|
-| GET    | `/books`               | Get all books                    |
-| GET    | `/books/:id`           | Get a single book by ID          |
-| POST   | `/books`               | Add a new book                   |
-| PUT    | `/books/:id`           | Update a book by ID              |
-| DELETE | `/books/:id`           | Delete a book by ID              |
-
-### Example Request
-
-#### 1. Get all books
-
-```bash
-GET /books
-```
-
-#### Response:
-
-```json
-[
-  {
-    "id": "1",
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "genre": "Fiction",
-    "price": 15.99
-  },
-  ...
-]
-```
-
-### Example of Creating a New Book
-
-```bash
-POST /books
-```
-
-#### Request Body:
-
-```json
-{
-  "title": "1984",
-  "author": "George Orwell",
-  "genre": "Dystopian",
-  "price": 12.99
-}
-```
-
-#### Response:
-
-```json
-{
-  "message": "Book created successfully!",
-  "book": {
-    "id": "2",
-    "title": "1984",
-    "author": "George Orwell",
-    "genre": "Dystopian",
-    "price": 12.99
-  }
-}
-```
 
 ## Technologies Used
 
